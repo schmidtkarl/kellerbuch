@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kellerbuch">
+<title>Kellerbuch · Zippiri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;1,6..96,400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #0e0c0a; --surface: #1a1714; --card: #221f1b; --border: #2e2a25;
+  --gold: #c9a84c; --text: #f0ebe3; --muted: #8a7f72; --muted-light: #b0a090;
+  --remove: #c0392b; --remove-light: #e74c3c; --add: #2e7d52; --add-light: #3aab6a;
+  --touch: 48px;
+}
+body { background: var(--bg); color: var(--text); font-family: 'Bodoni Moda', Georgia, serif; min-height: 100vh; display: flex; flex-direction: column; font-size: 16px; }
+
+/* SETUP */
+#setup { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 48px 32px; gap: 28px; }
+#setup .eyebrow { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+#setup h1 { font-size: 36px; font-weight: 400; text-align: center; letter-spacing: 0.04em; }
+#setup p { font-size: 15px; color: var(--muted); text-align: center; line-height: 1.8; max-width: 380px; }
+#setup p a { color: var(--gold); }
+#key-input { width: 100%; max-width: 440px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; color: var(--text); padding: 16px 20px; font-size: 15px; font-family: monospace; outline: none; height: var(--touch); }
+#key-input:focus { border-color: var(--gold); }
+#start-btn { width: 100%; max-width: 440px; height: var(--touch); border-radius: 12px; border: none; background: var(--gold); color: #0e0c0a; font-size: 16px; font-weight: 700; font-family: inherit; cursor: pointer; letter-spacing: 0.06em; }
+#setup-err { color: var(--remove-light); font-size: 13px; min-height: 20px; }
+
+/* APP */
+#app { display: none; flex-direction: column; height: 100vh; height: 100dvh; }
+.header { padding: 22px 28px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+.header h1 { font-size: 26px; font-weight: 400; letter-spacing: 0.04em; }
+.header-right { text-align: right; }
+#bottle-count { font-size: 32px; font-family: monospace; color: var(--gold); line-height: 1; }
+.bottle-label { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-top: 2px; }
+.sync-row { display: flex; align-items: center; gap: 10px; margin-top: 6px; justify-content: flex-end; }
+#sync-status { font-size: 12px; color: var(--muted); }
+#sync-status.ok { color: var(--add-light); }
+#sync-status.error { color: var(--remove-light); }
+#sync-status.syncing { color: var(--gold); }
+.refresh-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; font-family: inherit; min-height: 36px; }
+
+/* TABS */
+.tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
+.tab { flex: 1; padding: 0; height: 50px; background: none; border: none; border-bottom: 2px solid transparent; color: var(--muted); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: color 0.2s; }
+.tab.active { border-bottom-color: var(--gold); color: var(--gold); font-weight: 700; }
+
+/* PANELS */
+.panel { display: none; flex: 1; overflow: hidden; flex-direction: column; }
+.panel.active { display: flex; }
+#panel-log { flex-direction: row; }
+
+/* LOG */
+.log-left { flex: 1; border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 36px 32px; gap: 18px; overflow-y: auto; }
+.log-right { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
+.input-label { font-size: 11px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; align-self: flex-start; }
+.wine-textarea { width: 100%; flex: 1; min-height: 200px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; color: var(--text); padding: 18px 20px; font-size: 16px; font-family: inherit; line-height: 1.7; resize: none; outline: none; box-sizing: border-box; }
+.wine-textarea:focus { border-color: var(--gold); }
+.wine-textarea::placeholder { color: var(--muted); opacity: 0.65; }
+.submit-btn { width: 100%; height: 54px; border-radius: 12px; border: none; background: var(--gold); color: #0e0c0a; font-size: 16px; font-weight: 700; font-family: inherit; cursor: pointer; transition: opacity 0.2s; letter-spacing: 0.04em; }
+.submit-btn:disabled { opacity: 0.5; cursor: wait; }
+.submit-btn.processing { animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+.input-hint { font-size: 13px; color: var(--muted); text-align: center; line-height: 1.7; }
+.error-box { color: var(--remove-light); font-size: 13px; text-align: center; display: none; line-height: 1.5; }
+.section-label { padding: 12px 24px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.empty-hint { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; padding: 40px; text-align: center; line-height: 1.8; font-style: italic; }
+.change-row { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+.change-top { display: flex; justify-content: space-between; align-items: center; }
+.badge { padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-family: inherit; }
+.badge.remove { background: rgba(192,57,43,0.15); color: var(--remove-light); border: 1px solid rgba(192,57,43,0.3); }
+.badge.add { background: rgba(46,125,82,0.15); color: var(--add-light); border: 1px solid rgba(46,125,82,0.3); }
+.change-qty { font-family: monospace; font-size: 26px; font-weight: 700; }
+.change-qty.remove { color: var(--remove-light); }
+.change-qty.add { color: var(--add-light); }
+.change-producer { font-weight: 600; font-size: 16px; }
+.change-wine { color: var(--muted); font-size: 14px; }
+.summary-line { padding: 14px 24px; font-size: 13px; color: var(--muted); font-style: italic; }
+
+/* CELLAR */
+.cellar-toolbar { padding: 14px 22px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: center; background: var(--surface); flex-shrink: 0; min-height: 64px; }
+.search-input { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 12px 16px; font-size: 15px; font-family: inherit; outline: none; height: var(--touch); }
+.search-input:focus { border-color: var(--gold); }
+.add-btn { padding: 0 22px; height: var(--touch); border-radius: 10px; border: none; background: var(--gold); color: #0e0c0a; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; letter-spacing: 0.04em; }
+.table-header { display: grid; grid-template-columns: 2fr 3fr 1fr 1fr; padding: 10px 22px; border-bottom: 1px solid var(--border); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+.cellar-list { overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
+.cellar-row { display: grid; grid-template-columns: 2fr 3fr 1fr 1fr; padding: 16px 22px; border-bottom: 1px solid var(--border); cursor: pointer; align-items: center; transition: background 0.15s; min-height: 58px; }
+.cellar-row:active { background: var(--card); }
+.c-producer { font-weight: 600; font-size: 15px; }
+.c-wine { color: var(--muted-light); font-size: 14px; }
+.c-vintage { color: var(--muted); font-size: 13px; }
+.c-qty { text-align: right; font-family: monospace; font-size: 22px; font-weight: 700; color: var(--gold); }
+.c-qty.zero { color: var(--remove-light); }
+
+/* HISTORY */
+.history-list { overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
+.h-entry { border-bottom: 1px solid var(--border); padding: 18px 24px; }
+.h-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: var(--muted); }
+.h-transcript { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 12px; line-height: 1.6; }
+.h-change { display: flex; gap: 10px; align-items: center; padding: 6px 0; border-top: 1px solid var(--border); }
+.h-change + .h-change { border-top: none; }
+
+/* MODAL */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 200; padding: 28px; }
+.overlay.open { display: flex; }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 30px; width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 18px; }
+.modal h2 { font-size: 20px; font-weight: 400; letter-spacing: 0.03em; }
+.modal label { font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+.modal input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 12px 15px; font-size: 16px; font-family: inherit; outline: none; height: var(--touch); }
+.modal input:focus { border-color: var(--gold); }
+.modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.modal-actions { display: flex; gap: 12px; margin-top: 4px; }
+.btn-cancel { flex: 1; height: var(--touch); border-radius: 10px; border: 1px solid var(--border); background: none; color: var(--muted); font-size: 15px; cursor: pointer; font-family: inherit; }
+.btn-delete { padding: 0 18px; height: var(--touch); border-radius: 10px; border: 1px solid rgba(192,57,43,0.4); background: rgba(192,57,43,0.12); color: var(--remove-light); font-size: 15px; cursor: pointer; font-family: inherit; }
+.btn-save { flex: 1; height: var(--touch); border-radius: 10px; border: none; background: var(--gold); color: #0e0c0a; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+
+/* FOOTER */
+.footer { padding: 12px 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.footer-info { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+.reset-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 7px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; font-family: inherit; }
+.loading { padding: 56px; text-align: center; color: var(--muted); font-size: 14px; font-style: italic; }
+
+/* iPad 11 landscape: give the log panel more breathing room */
+@media (min-width: 900px) {
+  .log-left { padding: 40px 48px; max-width: 480px; }
+  .wine-textarea { font-size: 17px; }
+  .cellar-row { padding: 18px 28px; }
+  .table-header { padding: 10px 28px; }
+  .header { padding: 24px 32px 18px; }
+  .header h1 { font-size: 28px; }
+  #bottle-count { font-size: 36px; }
+}
+</style>
+</head>
+<body>
+
+<div id="setup">
+  <div class="eyebrow">Kellerbuch · Zippiri</div>
+  <h1>Kellerbuch</h1>
+  <p>Anthropic API-Key eingeben. Wird lokal auf diesem Gerät gespeichert.</p>
+  <input id="key-input" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
+  <div id="setup-err"></div>
+  <button id="start-btn">Weiter →</button>
+  <p style="font-size:13px;">Schlüssel erhalten unter <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
+</div>
+
+<div id="app">
+  <div class="header">
+    <div>
+      <div class="eyebrow">Kellerbuch · Zippiri</div>
+      <h1>Kellerbuch</h1>
+    </div>
+    <div class="header-right">
+      <div id="bottle-count">0</div>
+      <div class="bottle-label">Flaschen</div>
+      <div class="sync-row">
+        <span id="sync-status"></span>
+        <button class="refresh-btn" id="refresh-btn">↺ Sync</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="log">Abend-Log</button>
+    <button class="tab" data-tab="cellar" id="cellar-tab">Bestand</button>
+    <button class="tab" data-tab="history">Verlauf</button>
+  </div>
+
+  <div id="panel-log" class="panel active">
+    <div class="log-left">
+      <div class="input-label">Was wurde entnommen oder geliefert?</div>
+      <textarea class="wine-textarea" id="wine-input" placeholder="z.B. 2x Planeta NdA, 1x Gaja Barbaresco raus, Lieferung: 6x Soave Pieropan"></textarea>
+      <button class="submit-btn" id="submit-btn">Bestand aktualisieren</button>
+      <div class="input-hint">Freitext — Claude erkennt Mengen, Weine und ob es sich um Entnahme oder Lieferung handelt.</div>
+      <div class="error-box" id="error-box"></div>
+    </div>
+    <div class="log-right" id="log-right">
+      <div class="empty-hint">Ergebnisse erscheinen hier<br>nach dem Absenden.</div>
+    </div>
+  </div>
+
+  <div id="panel-cellar" class="panel">
+    <div class="cellar-toolbar">
+      <input class="search-input" id="search-input" placeholder="Suchen…" />
+      <button class="add-btn" id="add-btn">+ Eintrag</button>
+    </div>
+    <div class="table-header">
+      <span>Produzent</span><span>Wein</span><span>Jahrgang</span><span style="text-align:right">Menge</span>
+    </div>
+    <div class="cellar-list" id="cellar-list"><div class="loading">Lädt von Google Sheets…</div></div>
+  </div>
+
+  <div id="panel-history" class="panel">
+    <div class="cellar-toolbar" style="justify-content:space-between">
+      <span id="week-label" style="font-size:13px;color:var(--muted)"></span>
+      <button class="add-btn" id="export-btn">↓ CSV-Export</button>
+    </div>
+    <div class="history-list" id="history-list"><div class="loading">Noch kein Verlauf.</div></div>
+  </div>
+
+  <div class="footer">
+    <span class="footer-info">Live · Google Sheets · Zippiri</span>
+    <button class="reset-btn" id="reset-btn">API-Key ändern</button>
+  </div>
+</div>
+
+<div class="overlay" id="modal">
+  <div class="modal">
+    <h2>Eintrag bearbeiten</h2>
+    <div><label>Produzent</label><input id="m-producer" type="text" /></div>
+    <div><label>Wein</label><input id="m-wine" type="text" /></div>
+    <div class="modal-grid">
+      <div><label>Jahrgang</label><input id="m-vintage" type="number" /></div>
+      <div><label>Menge</label><input id="m-quantity" type="number" min="0" /></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="modal-cancel">Abbrechen</button>
+      <button class="btn-delete" id="modal-delete">Löschen</button>
+      <button class="btn-save" id="modal-save">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzZla_YdRgm9jItgAVA-BzxWM39dV6tySg4d55B4WzLZ709FwbmVWKJ93LfF_ns6IWi/exec";
+const SYSTEM_PROMPT = `You are the wine cellar assistant for Zippiri, a restaurant in Cologne. Staff type free-text shorthand notes (German, Italian, or English) describing wines removed during service or added from deliveries. Return ONLY valid JSON:
+{"language":"de","changes":[{"action":"remove","producer":"string","wine":"string","vintage":null,"quantity":1,"note":null}],"summary":"one sentence"}
+action is "add" or "remove".
+
+INPUT FORMAT — typed shorthand, not full sentences:
+- "2x Tanca Farrà raus" → quantity 2, producer "Sella & Mosca", wine "Tanca Farrà", action "remove"
+- "Lieferung: 6x Hebo" → quantity 6, producer "Petra", wine "Hebo", action "add"
+- "+3 Perlato" → quantity 3, action "add" (leading + = addition)
+- Multiple wines separated by commas, line breaks, or semicolons → one entry per wine in "changes"
+
+DEFAULT RULE: If no explicit addition signal (no "+", no "Lieferung", "geliefert", "rein", "dazu", "bekommen"), assume action is "remove". Removals are the far more common case.
+
+VINTAGE: Only set "vintage" if explicitly written (e.g. "'19", "2022"). Never guess. Leave null otherwise.
+
+MATCHING: Always output the producer and wine name EXACTLY as they appear in the cellar list below. This is critical — the strings are matched case-insensitively against the inventory. Use the list to resolve all abbreviations, shorthand, and partial names.
+
+ZIPPIRI CELLAR — current wine list (Producer | Wine):
+Bellavista | Alma Assemblage 2
+Bellavista | Teatro Alla Scala Brut
+Bellavista | Pas Operé Extra Brut
+Contadi Castaldi | Brùt
+Deutz | Champagne Brut Classic
+Berivagus | Blanc de Blancs Vintage
+Frescobaldi | Leonia Pomino Brut
+Corte Quaira | Saccomani Veneri Brut
+Schlossgut Diel | Riesling Réserve Extra Brut
+Sella & Mosca | Alghero Torbato Spumante
+J. Trautwein | Infinitea
+Sella & Mosca | La Cala Reale
+Sella & Mosca | Terre Bianche
+Cantina Capellini | Alba Bianco
+Colli VaiBo' | Lugana
+Tenuta Capofaro | Vigna di Paola
+Cantine De Gregorio | Bianco di San Lorenzo
+Frescobaldi | Pomino Bianco
+Gut Hermannsberg | Just Riesling!
+Dr. Loosen | Riesling Blauschiefer
+Salwey | Grauburgunder
+Argiolas | Cerdeña
+Schlossgut Diel | Pinot Gris Resèrve
+Cantina Terlan | Winkl
+Sella & Mosca | Cannonau di Sardegna Riserva
+Sella & Mosca | Terre Rare
+Sella & Mosca | Tanca Farrà
+Cantine De Gregorio | Haris
+Tenuta Tascante | Ghiaia Nera
+Tua Rita | Rosso dei Notri
+Alberto Longo | Primitivo
+I Vini del Mare Belvento | Sirēno
+Petra | Hebo
+Sella & Mosca | Marchese di Villamarina Riserva
+Fattoria Le Pupille | Poggio Valente
+Agricola Punica | Barrua
+Sella & Mosca | Ambat
+Sella & Mosca | Cuvée 161
+Cantine De Gregorio | Rahana
+Tenuta Monreale Agnello | Mhinoe
+Tenuta Valle delle Ferle | Murgentia Bianco
+Tenuta Regaleali | Vigna San Francesco
+Guado al Melo | L'Airone
+Petra | La Balena
+Petra | Monte Bamboli
+Poggioargentiera | Viognier
+Poggioargentiera | Vermentino
+Tua Rita | Perlato del Bosco
+Corte Quaiara | Campo al Salice
+Corte Quaiara | Monte delle Saette
+Cantina Anselmi | San Vincenzo
+Ronco Margherita | Friulano
+Cantina Terlan | Quartz
+Cantina Capellini | Cinque Terre
+Dr. Loosen | Wehlener Sonnenuhr GG
+Weingut Rinke | Riesling Wild auf Schiefer
+Weingut Rinke | Sauvignon Blanc Fumé
+Künstler | Riesling Trocken
+Künstler | Hochheimer Stielweg Riesling Alte Reben
+Künstler | Hochheim Hölle Riesling GG
+Joh. Bapt. Schäfer | Dorsheim Riesling
+Joh. Bapt. Schäfer | Kieselstein Rümmelsheim Riesling
+Joh. Bapt. Schäfer | Pittermännchen Riesling GG
+Gut Hermannsberg | 7 Terroirs Riesling
+Gut Hermannsberg | Rotenberg Altenbamberg Riesling GG
+Weingut Rappenhof | Hieronymus und Alexander Riesling
+A. Christmann | Riesling
+Karsten Peter | Riesling 1C
+A. Christmann | Meerspinne Gimmeldingen GG
+Salwey | Grauburgunder Oberrotweil Reserve
+Salwey | Oberrotweiler Henkenberg Grauburgunder GG
+Juliusspital | Würzburger Silvaner
+Agricola Punica | Montessu
+Sella & Mosca | Mustazzo
+Sella & Mosca | Marchese di Villamarina
+Cantine De Gregorio | Dragonara
+Tenuta Valle delle Ferle | Cerasuolo di Vittoria
+Tenuta Valle delle Ferle | Frappato
+Cantine Valenti | Norma
+Tenuta Regaleali | Rosso del Conte
+Tenuta Tascante | Contrada Sciaranuova
+Petra | Monte Bamboli Cabernet Franc
+Petra | Quercegobbe
+Petra | Potenti
+Petra | Petra
+Guado al Melo | Atis
+Guado al Melo | Rute
+Guado al Melo | Antillo
+Guado al Melo | Jassarte
+Tua Rita | Giusto di Notri
+Fattoria Le Pupille | Saffredi
+Tenuta Luce | Luce della Vite
+Tua Rita | Re di Gaffi
+Ornellaia | Le Serre Nuove dell'Ornellaia
+Masi Agricola | Brolo Campofiorin Oro
+Ceretto | Bernardina
+Gaja | Barolo Sperss
+J. Hofstätter | Meczan Pinot Nero
+J. Hofstätter | Barthenau Vigna San Urbano
+Burggarten | Walporzheim Spätburgunder
+Burggarten | Walporzheimer Kräuterberg Spätburgunder GG
+Burggarten | Heimersheimer Burggarten R Spätburgunder GG
+Meyer-Näkel | Spätburgunder
+Meyer-Näkel | Frühburgunder
+Meyer-Näkel | Blauschiefer Spätburgunder
+Meyer-Näkel | Sonnenberg Spätburgunder GG
+Meyer-Näkel | Pfarrwingert Spätburgunder GG
+Mayschloss | Walporzheimer Kräuterberg Spätburgunder GG
+Pflüger | Pinot Noir Buntsandstein
+Knipser | Blauer Spätburgunder
+Knipser | Kirschgarten Spätburgunder GG
+Knipser | Cuvée X
+Knipser | Im Großen Garten Spätburgunder GG
+Oliver Zeter | Cuvée Z
+Salwey | Henkenberg Spätburgunder GG
+Château La Gamaye | Cuvée Distinction
+Bodega Mustiguillo | Quincha Corral
+Baron Philippe De Rothschild | Escudo Rojo Gran Reserva
+
+COMMON STAFF ABBREVIATIONS for this cellar:
+- "Tanca" → Sella & Mosca | Tanca Farrà
+- "Cannonau" / "Canno" → Sella & Mosca | Cannonau di Sardegna Riserva
+- "Marchese" / "Villamarina" → Sella & Mosca | Marchese di Villamarina
+- "Barrua" → Agricola Punica | Barrua
+- "Montessu" → Agricola Punica | Montessu
+- "Ghiaia" → Tenuta Tascante | Ghiaia Nera
+- "Contrada" → Tenuta Tascante | Contrada Sciaranuova
+- "Hebo" → Petra | Hebo
+- "Perlato" → Tua Rita | Perlato del Bosco
+- "Rosso Notri" / "Notri" → Tua Rita | Rosso dei Notri
+- "Giusto" → Tua Rita | Giusto di Notri
+- "Saffredi" → Fattoria Le Pupille | Saffredi
+- "Poggio Valente" / "Pupille" → Fattoria Le Pupille | Poggio Valente
+- "Serre Nuove" / "Ornellaia" → Ornellaia | Le Serre Nuove dell'Ornellaia
+- "Winkl" → Cantina Terlan | Winkl
+- "Jassarte" → Guado al Melo | Jassarte
+- "Atis" → Guado al Melo | Atis
+- "Spätburgunder MN" / "Näkel" → Meyer-Näkel | Spätburgunder
+- "Hölle" → Künstler | Hochheim Hölle Riesling GG
+- "Pompino Bianco" / "Pomino" → Frescobaldi | Pomino Bianco
+- "Hermannsberg" / "Just Riesling" → Gut Hermannsberg | Just Riesling!
+- "Primitivo" → Alberto Longo | Primitivo
+
+Return nothing except the raw JSON object — no markdown, no backticks, no explanation.`;
+
+let inventory = [], history = [], editingEntry = null, apiKey = "";
+
+// ── BOOT ──────────────────────────────────────────────────────────────────────
+document.addEventListener("DOMContentLoaded", () => {
+  apiKey = localStorage.getItem("kb-key") || "";
+  try { history = JSON.parse(localStorage.getItem("kb-history") || "[]"); } catch {}
+  if (apiKey) showApp();
+  bindEvents();
+});
+
+function bindEvents() {
+  document.getElementById("start-btn").addEventListener("click", handleStart);
+  document.getElementById("key-input").addEventListener("keydown", e => { if (e.key === "Enter") handleStart(); });
+  document.getElementById("submit-btn").addEventListener("click", submitWineText);
+  document.getElementById("refresh-btn").addEventListener("click", fetchInventory);
+  document.getElementById("reset-btn").addEventListener("click", () => { localStorage.removeItem("kb-key"); location.reload(); });
+  document.getElementById("add-btn").addEventListener("click", () => openModal(null));
+  document.getElementById("search-input").addEventListener("input", renderCellar);
+  document.getElementById("export-btn").addEventListener("click", exportServiceWeekCSV);
+  document.getElementById("modal-cancel").addEventListener("click", closeModal);
+  document.getElementById("modal-save").addEventListener("click", saveEntry);
+  document.getElementById("modal-delete").addEventListener("click", deleteEntry);
+
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("panel-" + btn.dataset.tab).classList.add("active");
+      if (btn.dataset.tab === "history") updateWeekLabel();
+    });
+  });
+}
+
+function handleStart() {
+  const val = document.getElementById("key-input").value.trim();
+  if (!val || val.length < 10) {
+    document.getElementById("setup-err").textContent = "Bitte einen gültigen API-Key eingeben.";
+    return;
+  }
+  apiKey = val;
+  localStorage.setItem("kb-key", val);
+  showApp();
+}
+
+function showApp() {
+  document.getElementById("setup").style.display = "none";
+  document.getElementById("app").style.display = "flex";
+  fetchInventory();
+  renderHistory();
+}
+
+// ── SHEETS ────────────────────────────────────────────────────────────────────
+function setSyncStatus(state, text) {
+  const el = document.getElementById("sync-status");
+  el.className = state;
+  el.textContent = text;
+}
+
+async function fetchInventory() {
+  setSyncStatus("syncing", "Synchronisierung…");
+  try {
+    const res = await fetch(SHEETS_URL + "?t=" + Date.now());
+    const data = await res.json();
+    if (data.ok) {
+      inventory = data.inventory.map((e, i) => ({ ...e, _id: "id_" + i + "_" + Date.now() }));
+      renderCellar();
+      updateCount();
+      setSyncStatus("ok", "✓ Google Sheets");
+      setTimeout(() => setSyncStatus("", ""), 3000);
+    } else { setSyncStatus("error", "⚠ Tabellenfehler"); }
+  } catch(e) { setSyncStatus("error", "⚠ Verbindungsfehler"); console.error(e); }
+}
+
+async function pushChanges(changes) {
+  setSyncStatus("syncing", "Speichert…");
+  try {
+    const res = await fetch(SHEETS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" }, // text/plain avoids CORS preflight with Apps Script
+      body: JSON.stringify({ changes }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      setSyncStatus("ok", "✓ Gespeichert");
+      await fetchInventory();
+      setTimeout(() => setSyncStatus("", ""), 3000);
+    } else {
+      setSyncStatus("error", "⚠ " + (data.error || "Tabellenfehler"));
+      showError("Tabellenfehler: " + (data.error || "unbekannt"));
+    }
+  } catch(e) {
+    setSyncStatus("error", "⚠ Sync fehlgeschlagen");
+    showError("Sync fehlgeschlagen: " + e.message);
+  }
+}
+
+// ── AI ────────────────────────────────────────────────────────────────────────
+const PROXY_URL = "https://kellerbuch-proxy.karljasperschmidt.workers.dev";
+
+function setSubmitState(state) {
+  const btn = document.getElementById("submit-btn");
+  if (state === "processing") {
+    btn.disabled = true;
+    btn.classList.add("processing");
+    btn.textContent = "Wird verarbeitet…";
+  } else {
+    btn.disabled = false;
+    btn.classList.remove("processing");
+    btn.textContent = "Bestand aktualisieren";
+  }
+}
+
+async function submitWineText() {
+  const input = document.getElementById("wine-input");
+  const text = input.value.trim();
+  document.getElementById("error-box").style.display = "none";
+
+  if (!text || text.length < 3) { showError("Bitte etwas eingeben."); return; }
+
+  setSubmitState("processing");
+  try {
+    const res = await fetch(PROXY_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+      },
+      body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 1000, system: SYSTEM_PROMPT, messages: [{ role: "user", content: text }] }),
+    });
+    if (!res.ok) {
+      const errText = await res.text();
+      showError("HTTP " + res.status + ": " + errText.slice(0, 200));
+      setSubmitState("idle");
+      return;
+    }
+    const data = await res.json();
+    if (data.error) { showError("API-Fehler: " + data.error.message); setSubmitState("idle"); return; }
+    let raw = data.content.map(b => b.text || "").join("").trim();
+    raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/, "").replace(/```\s*$/, "").trim();
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch(parseErr) {
+      showError("Antwort konnte nicht verarbeitet werden: " + parseErr.message + " — Rohdaten: " + raw.slice(0, 150));
+      setSubmitState("idle");
+      return;
+    }
+    const entry = { id: Date.now(), timestamp: new Date().toISOString(), transcript: text, parsed };
+    history.unshift(entry);
+    localStorage.setItem("kb-history", JSON.stringify(history.slice(0, 50)));
+    renderResult(parsed);
+    renderHistory();
+    await pushChanges(parsed.changes);
+    input.value = "";
+  } catch(e) {
+    if (e.message.toLowerCase().includes("load failed") || e.message.toLowerCase().includes("network")) {
+      showError("Netzwerkfehler beim Verbinden mit der API: " + e.message);
+    } else {
+      showError("Fehler: " + e.message);
+    }
+  }
+  setSubmitState("idle");
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderResult(parsed) {
+  let html = '<div class="section-label">Erkannte Änderungen</div>';
+  parsed.changes.forEach(ch => {
+    const rem = ch.action === "remove";
+    html += `<div class="change-row">
+      <div class="change-top"><span class="badge ${ch.action}">${rem ? "− Entnahme" : "+ Lieferung"}</span><span class="change-qty ${ch.action}">${rem ? "−" : "+"}${ch.quantity}</span></div>
+      <div class="change-producer">${esc(ch.producer)}</div>
+      <div class="change-wine">${esc(ch.wine)}${ch.vintage ? " · " + ch.vintage : ""}</div>
+      ${ch.note ? '<div class="change-wine" style="font-style:italic">' + esc(ch.note) + "</div>" : ""}
+    </div>`;
+  });
+  html += `<div class="summary-line">${esc(parsed.summary)}</div>`;
+  document.getElementById("log-right").innerHTML = html;
+}
+
+function renderCellar() {
+  const q = (document.getElementById("search-input").value || "").toLowerCase();
+  const filtered = inventory.filter(e => !q || e.producer.toLowerCase().includes(q) || e.wine.toLowerCase().includes(q) || String(e.vintage).includes(q))
+    .sort((a, b) => a.producer.localeCompare(b.producer));
+  const list = document.getElementById("cellar-list");
+  if (!filtered.length) { list.innerHTML = '<div class="loading">' + (q ? "Keine Ergebnisse." : "Noch keine Einträge.") + "</div>"; return; }
+  list.innerHTML = filtered.map(e => `<div class="cellar-row" data-id="${e._id}">
+    <span class="c-producer">${esc(e.producer)}</span>
+    <span class="c-wine">${esc(e.wine)}</span>
+    <span class="c-vintage">${e.vintage || "o.J."}</span>
+    <span class="c-qty ${Number(e.quantity) === 0 ? "zero" : ""}">${e.quantity}</span>
+  </div>`).join("");
+  list.querySelectorAll(".cellar-row").forEach(row => {
+    row.addEventListener("click", () => {
+      const entry = inventory.find(e => e._id === row.dataset.id);
+      if (entry) openModal(entry);
+    });
+  });
+}
+
+function renderHistory() {
+  const list = document.getElementById("history-list");
+  if (!history.length) { list.innerHTML = '<div class="loading">Noch kein Verlauf.</div>'; return; }
+  list.innerHTML = history.map(entry => {
+    const d = new Date(entry.timestamp).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+    const changes = entry.parsed.changes.map((ch, i) => `<div class="h-change">
+      <span class="badge ${ch.action}">${ch.action === "remove" ? "− Entnahme" : "+ Lieferung"}</span>
+      <span class="change-qty ${ch.action}" style="font-size:16px">${ch.action === "remove" ? "−" : "+"}${ch.quantity}</span>
+      <span style="font-size:14px">${esc(ch.producer)} — ${esc(ch.wine)}</span>
+      ${ch.vintage ? '<span style="font-size:12px;color:var(--muted)">' + ch.vintage + "</span>" : ""}
+    </div>`).join("");
+    return `<div class="h-entry">
+      <div class="h-meta"><span>${d}</span><span>${entry.parsed.changes.length} Änderung${entry.parsed.changes.length !== 1 ? "en" : ""}</span></div>
+      <div class="h-transcript">„${esc(entry.transcript)}"</div>
+      ${changes}
+    </div>`;
+  }).join("");
+}
+
+function updateCount() {
+  document.getElementById("bottle-count").textContent = inventory.reduce((s, e) => s + Number(e.quantity), 0);
+  document.getElementById("cellar-tab").textContent = "Bestand (" + inventory.length + ")";
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────────
+function openModal(entry) {
+  editingEntry = entry;
+  document.getElementById("m-producer").value = entry ? entry.producer : "";
+  document.getElementById("m-wine").value = entry ? entry.wine : "";
+  document.getElementById("m-vintage").value = entry ? (entry.vintage || "") : "";
+  document.getElementById("m-quantity").value = entry ? entry.quantity : 0;
+  document.getElementById("modal-delete").style.display = entry ? "block" : "none";
+  document.getElementById("modal").classList.add("open");
+}
+
+function closeModal() { document.getElementById("modal").classList.remove("open"); editingEntry = null; }
+
+async function saveEntry() {
+  const producer = document.getElementById("m-producer").value.trim();
+  const wine = document.getElementById("m-wine").value.trim();
+  const vintage = document.getElementById("m-vintage").value ? Number(document.getElementById("m-vintage").value) : null;
+  const quantity = Number(document.getElementById("m-quantity").value);
+  if (!producer || !wine) return;
+  closeModal();
+  if (editingEntry) {
+    const delta = quantity - Number(editingEntry.quantity);
+    if (delta !== 0) await pushChanges([{ action: delta > 0 ? "add" : "remove", producer, wine, vintage, quantity: Math.abs(delta) }]);
+    else await fetchInventory();
+  } else {
+    await pushChanges([{ action: "add", producer, wine, vintage, quantity }]);
+  }
+}
+
+async function deleteEntry() {
+  if (!editingEntry || !confirm("Eintrag wirklich löschen?")) return;
+  closeModal();
+  if (Number(editingEntry.quantity) > 0) {
+    await pushChanges([{ action: "remove", producer: editingEntry.producer, wine: editingEntry.wine, vintage: editingEntry.vintage, quantity: Number(editingEntry.quantity) }]);
+  } else await fetchInventory();
+}
+
+function showError(msg) { const el = document.getElementById("error-box"); el.textContent = msg; el.style.display = "block"; }
+function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+// ── SERVICE WEEK ──────────────────────────────────────────────────────────────
+// Service week: Thu–Mon. Tue & Wed are closed.
+function getServiceWeekStart(date) {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  const dayOfWeek = d.getDay();
+  const daysSinceThu = (dayOfWeek + 3) % 7; // Thu→0, Fri→1, Sat→2, Sun→3, Mon→4, Tue→5, Wed→6
+  d.setDate(d.getDate() - daysSinceThu);
+  return d;
+}
+
+function getServiceWeekEnd(start) {
+  const end = new Date(start);
+  end.setDate(start.getDate() + 4); // Thu + 4 = Mon
+  end.setHours(23, 59, 59, 999);
+  return end;
+}
+
+function updateWeekLabel() {
+  const start = getServiceWeekStart(new Date());
+  const end = getServiceWeekEnd(start);
+  const fmt = d => d.toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" });
+  document.getElementById("week-label").textContent = "Servicewoche: " + fmt(start) + " – " + fmt(end);
+}
+
+function exportServiceWeekCSV() {
+  const start = getServiceWeekStart(new Date());
+  const end = getServiceWeekEnd(start);
+
+  const weekEntries = history.filter(e => {
+    const t = new Date(e.timestamp);
+    return t >= start && t <= end;
+  });
+
+  if (!weekEntries.length) {
+    alert("Keine Einträge in dieser Servicewoche.");
+    return;
+  }
+
+  const rows = [["Zeitpunkt", "Aktion", "Produzent", "Wein", "Jahrgang", "Menge", "Notiz", "Eingabe"]];
+  weekEntries.forEach(entry => {
+    entry.parsed.changes.forEach(ch => {
+      rows.push([
+        new Date(entry.timestamp).toLocaleString("de-DE"),
+        ch.action === "remove" ? "Entnahme" : "Lieferung",
+        ch.producer,
+        ch.wine,
+        ch.vintage || "",
+        ch.quantity,
+        ch.note || "",
+        entry.transcript,
+      ]);
+    });
+  });
+
+  const csv = rows.map(r => r.map(cell => '"' + String(cell).replace(/"/g, '""') + '"').join(",")).join("\n");
+  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" }); // BOM for Excel
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const weekStr = start.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }).replace(".", "-").replace(".", "");
+  a.href = url;
+  a.download = "kellerbuch-woche-" + weekStr + ".csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
