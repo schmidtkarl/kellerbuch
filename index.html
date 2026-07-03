@@ -16,93 +16,120 @@
   --bg: #0e0c0a; --surface: #1a1714; --card: #221f1b; --border: #2e2a25;
   --gold: #c9a84c; --text: #f0ebe3; --muted: #8a7f72; --muted-light: #b0a090;
   --remove: #c0392b; --remove-light: #e74c3c; --add: #2e7d52; --add-light: #3aab6a;
-  --touch: 48px;
+  --touch: 56px;
 }
-body { background: var(--bg); color: var(--text); font-family: 'Bodoni Moda', Georgia, serif; min-height: 100vh; display: flex; flex-direction: column; font-size: 16px; }
+body { background: var(--bg); color: var(--text); font-family: 'Bodoni Moda', Georgia, serif; min-height: 100vh; display: flex; flex-direction: column; font-size: 18px; }
 
 /* SETUP */
 #setup { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 48px 32px; gap: 28px; }
-#setup .eyebrow { font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
-#setup h1 { font-size: 36px; font-weight: 400; text-align: center; letter-spacing: 0.04em; }
-#setup p { font-size: 15px; color: var(--muted); text-align: center; line-height: 1.8; max-width: 380px; }
+#setup .eyebrow { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); }
+#setup h1 { font-size: 40px; font-weight: 400; text-align: center; letter-spacing: 0.04em; }
+#setup p { font-size: 16px; color: var(--muted); text-align: center; line-height: 1.8; max-width: 380px; }
 #setup p a { color: var(--gold); }
-#key-input { width: 100%; max-width: 440px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; color: var(--text); padding: 16px 20px; font-size: 15px; font-family: monospace; outline: none; height: var(--touch); }
+#key-input { width: 100%; max-width: 440px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; color: var(--text); padding: 16px 20px; font-size: 16px; font-family: monospace; outline: none; height: var(--touch); }
 #key-input:focus { border-color: var(--gold); }
-#start-btn { width: 100%; max-width: 440px; height: var(--touch); border-radius: 12px; border: none; background: var(--gold); color: #0e0c0a; font-size: 16px; font-weight: 700; font-family: inherit; cursor: pointer; letter-spacing: 0.06em; }
-#setup-err { color: var(--remove-light); font-size: 13px; min-height: 20px; }
+#start-btn { width: 100%; max-width: 440px; height: var(--touch); border-radius: 12px; border: none; background: var(--gold); color: #0e0c0a; font-size: 17px; font-weight: 700; font-family: inherit; cursor: pointer; letter-spacing: 0.06em; }
+#setup-err { color: var(--remove-light); font-size: 14px; min-height: 20px; }
 
 /* APP */
 #app { display: none; flex-direction: column; height: 100vh; height: 100dvh; }
-.header { padding: 22px 28px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-.eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
-.header h1 { font-size: 26px; font-weight: 400; letter-spacing: 0.04em; }
+.header { padding: 20px 28px 14px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.eyebrow { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+.header h1 { font-size: 28px; font-weight: 400; letter-spacing: 0.04em; }
 .header-right { text-align: right; }
-#bottle-count { font-size: 32px; font-family: monospace; color: var(--gold); line-height: 1; }
-.bottle-label { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-top: 2px; }
+#bottle-count { font-size: 34px; font-family: monospace; color: var(--gold); line-height: 1; }
+.bottle-label { font-size: 12px; color: var(--muted); letter-spacing: 0.08em; margin-top: 2px; }
 .sync-row { display: flex; align-items: center; gap: 10px; margin-top: 6px; justify-content: flex-end; }
-#sync-status { font-size: 12px; color: var(--muted); }
+#sync-status { font-size: 13px; color: var(--muted); }
 #sync-status.ok { color: var(--add-light); }
 #sync-status.error { color: var(--remove-light); }
 #sync-status.syncing { color: var(--gold); }
-.refresh-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; font-family: inherit; min-height: 36px; }
+.refresh-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 6px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit; min-height: 38px; }
 
 /* TABS */
 .tabs { display: flex; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
-.tab { flex: 1; padding: 0; height: 50px; background: none; border: none; border-bottom: 2px solid transparent; color: var(--muted); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: color 0.2s; }
+.tab { flex: 1; padding: 0; height: 56px; background: none; border: none; border-bottom: 3px solid transparent; color: var(--muted); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: color 0.2s; }
 .tab.active { border-bottom-color: var(--gold); color: var(--gold); font-weight: 700; }
 
 /* PANELS */
 .panel { display: none; flex: 1; overflow: hidden; flex-direction: column; }
 .panel.active { display: flex; }
-#panel-log { flex-direction: row; }
 
-/* LOG */
-.log-left { flex: 1; border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; padding: 36px 32px; gap: 18px; overflow-y: auto; }
-.log-right { flex: 1; display: flex; flex-direction: column; overflow-y: auto; }
-.input-label { font-size: 11px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; align-self: flex-start; }
-.wine-textarea { width: 100%; flex: 1; min-height: 200px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; color: var(--text); padding: 18px 20px; font-size: 16px; font-family: inherit; line-height: 1.7; resize: none; outline: none; box-sizing: border-box; }
+/* LOG PANEL — single column, scrollable, centered */
+.log-main { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 32px 28px 48px; display: flex; flex-direction: column; gap: 22px; max-width: 580px; width: 100%; align-self: center; }
+
+/* Input state */
+.input-label { font-size: 14px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+.wine-textarea { width: 100%; min-height: 150px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; color: var(--text); padding: 20px 22px; font-size: 18px; font-family: inherit; line-height: 1.7; resize: none; outline: none; }
 .wine-textarea:focus { border-color: var(--gold); }
 .wine-textarea::placeholder { color: var(--muted); opacity: 0.65; }
-.submit-btn { width: 100%; height: 54px; border-radius: 12px; border: none; background: var(--gold); color: #0e0c0a; font-size: 16px; font-weight: 700; font-family: inherit; cursor: pointer; transition: opacity 0.2s; letter-spacing: 0.04em; }
+.submit-btn { width: 100%; height: 64px; border-radius: 14px; border: none; background: var(--gold); color: #0e0c0a; font-size: 19px; font-weight: 700; font-family: inherit; cursor: pointer; transition: opacity 0.2s; letter-spacing: 0.04em; }
 .submit-btn:disabled { opacity: 0.5; cursor: wait; }
 .submit-btn.processing { animation: pulse 1.2s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
-.input-hint { font-size: 13px; color: var(--muted); text-align: center; line-height: 1.7; }
-.error-box { color: var(--remove-light); font-size: 13px; text-align: center; display: none; line-height: 1.5; }
-.section-label { padding: 12px 24px; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); flex-shrink: 0; }
-.empty-hint { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px; padding: 40px; text-align: center; line-height: 1.8; font-style: italic; }
-.change-row { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
-.change-top { display: flex; justify-content: space-between; align-items: center; }
-.badge { padding: 4px 12px; border-radius: 14px; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-family: inherit; }
+.input-hint { font-size: 14px; color: var(--muted); text-align: center; line-height: 1.8; }
+.error-box { color: var(--remove-light); font-size: 15px; display: none; line-height: 1.6; padding: 16px 20px; background: rgba(192,57,43,0.1); border-radius: 12px; border: 1px solid rgba(192,57,43,0.25); }
+
+/* Confirmation state */
+.confirm-header { text-align: center; padding-bottom: 4px; }
+.confirm-title { font-size: 24px; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 6px; }
+.confirm-subtitle { font-size: 15px; color: var(--muted); }
+.confirm-changes { display: flex; flex-direction: column; gap: 12px; }
+.confirm-change-card { background: var(--card); border-radius: 14px; padding: 20px 22px; border: 1px solid var(--border); }
+.confirm-change-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.confirm-actions { display: flex; gap: 14px; }
+.btn-back { flex: 1; height: 56px; border-radius: 14px; border: 1px solid var(--border); background: none; color: var(--muted); font-size: 17px; cursor: pointer; font-family: inherit; }
+.btn-confirm { flex: 2; height: 64px; border-radius: 14px; border: none; background: var(--add); color: #fff; font-size: 19px; font-weight: 700; cursor: pointer; font-family: inherit; letter-spacing: 0.03em; }
+.btn-confirm:disabled { opacity: 0.5; cursor: wait; }
+.btn-confirm.saving { animation: pulse 1.2s ease-in-out infinite; }
+
+/* Success state */
+.success-panel { display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 24px 0 8px; text-align: center; }
+.success-icon { width: 80px; height: 80px; border-radius: 50%; background: rgba(46,125,82,0.2); border: 2px solid var(--add-light); display: flex; align-items: center; justify-content: center; font-size: 36px; }
+.success-title { font-size: 28px; font-weight: 600; color: var(--add-light); }
+.success-summary { font-size: 16px; color: var(--muted); line-height: 1.8; font-style: italic; max-width: 400px; }
+.btn-new { width: 100%; height: 64px; border-radius: 14px; border: none; background: var(--gold); color: #0e0c0a; font-size: 19px; font-weight: 700; font-family: inherit; cursor: pointer; letter-spacing: 0.04em; }
+
+/* Shared badge + qty */
+.badge { padding: 5px 14px; border-radius: 14px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-family: inherit; }
 .badge.remove { background: rgba(192,57,43,0.15); color: var(--remove-light); border: 1px solid rgba(192,57,43,0.3); }
 .badge.add { background: rgba(46,125,82,0.15); color: var(--add-light); border: 1px solid rgba(46,125,82,0.3); }
-.change-qty { font-family: monospace; font-size: 26px; font-weight: 700; }
+.change-qty { font-family: monospace; font-weight: 700; }
 .change-qty.remove { color: var(--remove-light); }
 .change-qty.add { color: var(--add-light); }
-.change-producer { font-weight: 600; font-size: 16px; }
-.change-wine { color: var(--muted); font-size: 14px; }
-.summary-line { padding: 14px 24px; font-size: 13px; color: var(--muted); font-style: italic; }
 
 /* CELLAR */
-.cellar-toolbar { padding: 14px 22px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: center; background: var(--surface); flex-shrink: 0; min-height: 64px; }
-.search-input { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 12px 16px; font-size: 15px; font-family: inherit; outline: none; height: var(--touch); }
+.cellar-toolbar { padding: 14px 22px; border-bottom: 1px solid var(--border); display: flex; gap: 12px; align-items: center; background: var(--surface); flex-shrink: 0; min-height: 68px; }
+.search-input { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 12px 16px; font-size: 16px; font-family: inherit; outline: none; height: var(--touch); }
 .search-input:focus { border-color: var(--gold); }
-.add-btn { padding: 0 22px; height: var(--touch); border-radius: 10px; border: none; background: var(--gold); color: #0e0c0a; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; letter-spacing: 0.04em; }
-.table-header { display: grid; grid-template-columns: 2fr 3fr 1fr 1fr; padding: 10px 22px; border-bottom: 1px solid var(--border); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+.add-btn { padding: 0 22px; height: var(--touch); border-radius: 10px; border: none; background: var(--gold); color: #0e0c0a; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; white-space: nowrap; letter-spacing: 0.04em; }
+.table-header { display: grid; grid-template-columns: 2fr 3fr 1fr 1fr; padding: 10px 22px; border-bottom: 1px solid var(--border); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
 .cellar-list { overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
-.cellar-row { display: grid; grid-template-columns: 2fr 3fr 1fr 1fr; padding: 16px 22px; border-bottom: 1px solid var(--border); cursor: pointer; align-items: center; transition: background 0.15s; min-height: 58px; }
+.cellar-row { display: grid; grid-template-columns: 2fr 3fr 1fr 1fr; padding: 18px 22px; border-bottom: 1px solid var(--border); cursor: pointer; align-items: center; transition: background 0.15s; min-height: 64px; }
 .cellar-row:active { background: var(--card); }
-.c-producer { font-weight: 600; font-size: 15px; }
+.c-producer { font-weight: 600; font-size: 16px; }
 .c-wine { color: var(--muted-light); font-size: 14px; }
 .c-vintage { color: var(--muted); font-size: 13px; }
-.c-qty { text-align: right; font-family: monospace; font-size: 22px; font-weight: 700; color: var(--gold); }
+.c-qty { text-align: right; font-family: monospace; font-size: 24px; font-weight: 700; color: var(--gold); }
 .c-qty.zero { color: var(--remove-light); }
+.cellar-group-row { cursor: pointer; }
+.cellar-variants { display: none; }
+.cellar-variant-row { background: rgba(0,0,0,0.18); padding-left: 40px; cursor: pointer; }
+.cellar-variant-row .c-wine { color: var(--muted); font-size: 13px; }
+.cellar-variant-row .c-qty { font-size: 18px; }
+
+/* VINTAGE PICKER (confirmation) */
+.confirm-vintage-picker { margin-top: 12px; }
+.confirm-vintage-picker label { display: block; font-size: 12px; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+.vintage-select { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 10px 12px; font-size: 15px; font-family: inherit; height: 44px; }
+.vintage-select:focus { border-color: var(--gold); }
+.vintage-select.unresolved { border-color: var(--remove-light); }
 
 /* HISTORY */
 .history-list { overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
-.h-entry { border-bottom: 1px solid var(--border); padding: 18px 24px; }
-.h-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: var(--muted); }
-.h-transcript { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 12px; line-height: 1.6; }
+.h-entry { border-bottom: 1px solid var(--border); padding: 20px 26px; }
+.h-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; color: var(--muted); }
+.h-transcript { font-size: 14px; color: var(--muted); font-style: italic; margin-bottom: 12px; line-height: 1.6; }
 .h-change { display: flex; gap: 10px; align-items: center; padding: 6px 0; border-top: 1px solid var(--border); }
 .h-change + .h-change { border-top: none; }
 
@@ -110,46 +137,70 @@ body { background: var(--bg); color: var(--text); font-family: 'Bodoni Moda', Ge
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 200; padding: 28px; }
 .overlay.open { display: flex; }
 .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 30px; width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 18px; }
-.modal h2 { font-size: 20px; font-weight: 400; letter-spacing: 0.03em; }
-.modal label { font-size: 10px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 6px; }
-.modal input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 12px 15px; font-size: 16px; font-family: inherit; outline: none; height: var(--touch); }
+.modal h2 { font-size: 22px; font-weight: 400; letter-spacing: 0.03em; }
+.modal label { font-size: 11px; color: var(--muted); letter-spacing: 0.14em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+.modal input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 14px 16px; font-size: 17px; font-family: inherit; outline: none; height: var(--touch); }
 .modal input:focus { border-color: var(--gold); }
 .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .modal-actions { display: flex; gap: 12px; margin-top: 4px; }
-.btn-cancel { flex: 1; height: var(--touch); border-radius: 10px; border: 1px solid var(--border); background: none; color: var(--muted); font-size: 15px; cursor: pointer; font-family: inherit; }
-.btn-delete { padding: 0 18px; height: var(--touch); border-radius: 10px; border: 1px solid rgba(192,57,43,0.4); background: rgba(192,57,43,0.12); color: var(--remove-light); font-size: 15px; cursor: pointer; font-family: inherit; }
-.btn-save { flex: 1; height: var(--touch); border-radius: 10px; border: none; background: var(--gold); color: #0e0c0a; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; }
+.btn-cancel { flex: 1; height: var(--touch); border-radius: 10px; border: 1px solid var(--border); background: none; color: var(--muted); font-size: 16px; cursor: pointer; font-family: inherit; }
+.btn-delete { padding: 0 18px; height: var(--touch); border-radius: 10px; border: 1px solid rgba(192,57,43,0.4); background: rgba(192,57,43,0.12); color: var(--remove-light); font-size: 16px; cursor: pointer; font-family: inherit; }
+.btn-save { flex: 1; height: var(--touch); border-radius: 10px; border: none; background: var(--gold); color: #0e0c0a; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; }
 
 /* FOOTER */
-.footer { padding: 12px 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
-.footer-info { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
-.reset-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 7px 14px; border-radius: 6px; font-size: 12px; cursor: pointer; font-family: inherit; }
-.loading { padding: 56px; text-align: center; color: var(--muted); font-size: 14px; font-style: italic; }
+.footer { padding: 14px 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.footer-info { font-size: 12px; color: var(--muted); letter-spacing: 0.06em; }
+.reset-btn { background: none; border: 1px solid var(--border); color: var(--muted); padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; font-family: inherit; }
+.loading { padding: 56px; text-align: center; color: var(--muted); font-size: 15px; font-style: italic; }
 
-/* iPad 11 landscape: give the log panel more breathing room */
+/* INVENTUR */
+#inv-state-list  { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+#inv-state-count { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+.inv-reference { text-align: center; padding: 8px 0 4px; }
+.inv-wine-title { font-size: 22px; font-weight: 600; }
+.inv-wine-subtitle { font-size: 16px; color: var(--muted-light); margin-top: 4px; }
+.inv-expected { font-size: 17px; color: var(--gold); margin-top: 12px; font-style: italic; }
+.inv-inputs { display: flex; flex-direction: column; gap: 12px; }
+.inv-input-row { display: flex; justify-content: space-between; align-items: center; background: var(--card); border-radius: 14px; padding: 18px 22px; border: 1px solid var(--border); }
+.inv-input-row label { font-size: 17px; }
+.inv-input-row input[type="number"] { width: 88px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; color: var(--text); padding: 10px 12px; font-size: 24px; font-family: monospace; text-align: center; outline: none; height: 52px; -moz-appearance: textfield; }
+.inv-input-row input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+.inv-input-row input[type="number"]:focus { border-color: var(--gold); }
+.inv-result { background: var(--card); border-radius: 14px; padding: 20px 22px; text-align: center; border: 1px solid var(--border); }
+.inv-counted-label { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+.inv-counted-val { font-size: 42px; font-family: monospace; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 10px; }
+.inv-delta { font-size: 20px; font-weight: 700; padding: 8px 20px; border-radius: 20px; display: inline-block; }
+.inv-delta.match   { background: rgba(46,125,82,0.15);  color: var(--add-light);    border: 1px solid rgba(46,125,82,0.3); }
+.inv-delta.missing { background: rgba(192,57,43,0.15); color: var(--remove-light); border: 1px solid rgba(192,57,43,0.3); }
+.inv-delta.surplus { background: rgba(201,168,76,0.15); color: var(--gold);         border: 1px solid rgba(201,168,76,0.3); }
+
+/* iPad 11 landscape */
 @media (min-width: 900px) {
-  .log-left { padding: 40px 48px; max-width: 480px; }
-  .wine-textarea { font-size: 17px; }
-  .cellar-row { padding: 18px 28px; }
+  .log-main { padding: 44px 60px 60px; }
+  .wine-textarea { font-size: 19px; min-height: 170px; }
+  .cellar-row { padding: 20px 28px; }
   .table-header { padding: 10px 28px; }
   .header { padding: 24px 32px 18px; }
-  .header h1 { font-size: 28px; }
-  #bottle-count { font-size: 36px; }
+  .header h1 { font-size: 30px; }
+  #bottle-count { font-size: 38px; }
 }
 </style>
 </head>
 <body>
 
+<!-- SETUP SCREEN -->
 <div id="setup">
   <div class="eyebrow">Kellerbuch · Zippiri</div>
   <h1>Kellerbuch</h1>
   <p>Anthropic API-Key eingeben. Wird lokal auf diesem Gerät gespeichert.</p>
-  <input id="key-input" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false" />
+  <input id="key-input" type="password" placeholder="sk-ant-…" autocomplete="off" spellcheck="false" />
   <div id="setup-err"></div>
   <button id="start-btn">Weiter →</button>
-  <p style="font-size:13px;">Schlüssel erhalten unter <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
+  <p style="font-size:14px;">Schlüssel erhalten unter <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></p>
 </div>
 
+<!-- MAIN APP -->
 <div id="app">
   <div class="header">
     <div>
@@ -167,24 +218,55 @@ body { background: var(--bg); color: var(--text); font-family: 'Bodoni Moda', Ge
   </div>
 
   <div class="tabs">
-    <button class="tab active" data-tab="log">Abend-Log</button>
+    <button class="tab active" data-tab="log">Eingabe</button>
     <button class="tab" data-tab="cellar" id="cellar-tab">Bestand</button>
     <button class="tab" data-tab="history">Verlauf</button>
+    <button class="tab" data-tab="inventur">Inventur</button>
   </div>
 
+  <!-- LOG / INPUT PANEL -->
   <div id="panel-log" class="panel active">
-    <div class="log-left">
-      <div class="input-label">Was wurde entnommen oder geliefert?</div>
-      <textarea class="wine-textarea" id="wine-input" placeholder="z.B. 2x Planeta NdA, 1x Gaja Barbaresco raus, Lieferung: 6x Soave Pieropan"></textarea>
-      <button class="submit-btn" id="submit-btn">Bestand aktualisieren</button>
-      <div class="input-hint">Freitext — Claude erkennt Mengen, Weine und ob es sich um Entnahme oder Lieferung handelt.</div>
-      <div class="error-box" id="error-box"></div>
-    </div>
-    <div class="log-right" id="log-right">
-      <div class="empty-hint">Ergebnisse erscheinen hier<br>nach dem Absenden.</div>
+    <div class="log-main">
+
+      <!-- STATE 1: Text input -->
+      <div id="state-input">
+        <div class="input-label">Was wurde heute entnommen?</div>
+        <textarea class="wine-textarea" id="wine-input"
+          placeholder="z.B. 2x Tanca raus, 1x Barbaresco raus&#10;&#10;Auch Lieferungen möglich: „Lieferung: 6x Hebo""></textarea>
+        <button class="submit-btn" id="submit-btn">Weiter →</button>
+        <div class="input-hint">Freitext — einfach tippen wie immer</div>
+        <div class="error-box" id="error-box"></div>
+      </div>
+
+      <!-- STATE 2: Confirmation -->
+      <div id="state-confirm" style="display:none">
+        <div class="confirm-header">
+          <div class="confirm-title">Stimmt das so?</div>
+          <div class="confirm-subtitle">Bitte kurz prüfen, dann speichern.</div>
+        </div>
+        <div class="confirm-changes" id="confirm-changes-list"></div>
+        <div id="confirm-summary-text" style="margin-top:8px;font-style:italic;font-size:14px;color:var(--muted);text-align:center"></div>
+        <div class="confirm-actions" style="margin-top:22px">
+          <button class="btn-back" id="confirm-back">← Zurück</button>
+          <button class="btn-confirm" id="confirm-yes">✓ Ja, speichern</button>
+        </div>
+        <div class="error-box" id="confirm-error-box" style="margin-top:16px"></div>
+      </div>
+
+      <!-- STATE 3: Success -->
+      <div id="state-success" style="display:none">
+        <div class="success-panel">
+          <div class="success-icon">✓</div>
+          <div class="success-title">Gespeichert!</div>
+          <div class="success-summary" id="success-summary"></div>
+          <button class="btn-new" id="btn-new-entry">Neue Eingabe</button>
+        </div>
+      </div>
+
     </div>
   </div>
 
+  <!-- CELLAR PANEL -->
   <div id="panel-cellar" class="panel">
     <div class="cellar-toolbar">
       <input class="search-input" id="search-input" placeholder="Suchen…" />
@@ -196,12 +278,68 @@ body { background: var(--bg); color: var(--text); font-family: 'Bodoni Moda', Ge
     <div class="cellar-list" id="cellar-list"><div class="loading">Lädt von Google Sheets…</div></div>
   </div>
 
+  <!-- HISTORY PANEL -->
   <div id="panel-history" class="panel">
     <div class="cellar-toolbar" style="justify-content:space-between">
-      <span id="week-label" style="font-size:13px;color:var(--muted)"></span>
+      <span id="week-label" style="font-size:14px;color:var(--muted)"></span>
       <button class="add-btn" id="export-btn">↓ CSV-Export</button>
     </div>
     <div class="history-list" id="history-list"><div class="loading">Noch kein Verlauf.</div></div>
+  </div>
+
+  <!-- INVENTUR PANEL -->
+  <div id="panel-inventur" class="panel">
+
+    <!-- State 1: wine list -->
+    <div id="inv-state-list">
+      <div class="cellar-toolbar">
+        <input class="search-input" id="inv-search" placeholder="Wein suchen…" />
+      </div>
+      <div class="table-header">
+        <span>Produzent</span><span>Wein</span><span>Jahrgang</span><span style="text-align:right">Soll</span>
+      </div>
+      <div class="cellar-list" id="inv-list"><div class="loading">Bestand laden…</div></div>
+    </div>
+
+    <!-- State 2: counting screen -->
+    <div id="inv-state-count" style="display:none">
+      <div class="log-main">
+
+        <div class="inv-reference">
+          <div class="inv-wine-title" id="inv-title"></div>
+          <div class="inv-wine-subtitle" id="inv-subtitle"></div>
+          <div class="inv-expected">Sollten <strong id="inv-expected-val">0</strong> Flaschen sein</div>
+        </div>
+
+        <div class="inv-inputs">
+          <div class="inv-input-row">
+            <label>Kartons <span style="font-size:13px;color:var(--muted)">(je 6 Fl.)</span></label>
+            <input type="number" id="inv-boxes" value="0" min="0" inputmode="numeric" />
+          </div>
+          <div class="inv-input-row">
+            <label>Lose Flaschen</label>
+            <input type="number" id="inv-loose" value="0" min="0" inputmode="numeric" />
+          </div>
+          <div class="inv-input-row">
+            <label>Lose Magnums</label>
+            <input type="number" id="inv-magnums" value="0" min="0" inputmode="numeric" />
+          </div>
+        </div>
+
+        <div class="inv-result">
+          <div class="inv-counted-label">Gezählt</div>
+          <div class="inv-counted-val" id="inv-counted-val">0</div>
+          <div class="inv-delta match" id="inv-delta">✓ Stimmt</div>
+        </div>
+
+        <div class="confirm-actions">
+          <button class="btn-back" id="inv-back">← Zurück</button>
+          <button class="btn-confirm" id="inv-save">✓ Speichern</button>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
   <div class="footer">
@@ -210,6 +348,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Bodoni Moda', Ge
   </div>
 </div>
 
+<!-- EDIT MODAL -->
 <div class="overlay" id="modal">
   <div class="modal">
     <h2>Eintrag bearbeiten</h2>
@@ -228,7 +367,9 @@ body { background: var(--bg); color: var(--text); font-family: 'Bodoni Moda', Ge
 </div>
 
 <script>
-const SHEETS_URL = "https://script.google.com/macros/s/AKfycbzZla_YdRgm9jItgAVA-BzxWM39dV6tySg4d55B4WzLZ709FwbmVWKJ93LfF_ns6IWi/exec";
+const SHEETS_URL = "https://script.google.com/macros/s/AKfycbw1oCbj-Kr-Nq3bf6-KI7iA0xRbLvcqRyRBotO6ilJjhp53YvDTQ-hFhp9UHPRDXLwj/exec";
+const PROXY_URL  = "https://kellerbuch-proxy.karljasperschmidt.workers.dev";
+
 const SYSTEM_PROMPT = `You are the wine cellar assistant for Zippiri, a restaurant in Cologne. Staff type free-text shorthand notes (German, Italian, or English) describing wines removed during service or added from deliveries. Return ONLY valid JSON:
 {"language":"de","changes":[{"action":"remove","producer":"string","wine":"string","vintage":null,"quantity":1,"note":null}],"summary":"one sentence"}
 action is "add" or "remove".
@@ -392,6 +533,7 @@ COMMON STAFF ABBREVIATIONS for this cellar:
 Return nothing except the raw JSON object — no markdown, no backticks, no explanation.`;
 
 let inventory = [], history = [], editingEntry = null, apiKey = "";
+let pendingParsed = null, inventurEntry = null;
 
 // ── BOOT ──────────────────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
@@ -413,6 +555,19 @@ function bindEvents() {
   document.getElementById("modal-cancel").addEventListener("click", closeModal);
   document.getElementById("modal-save").addEventListener("click", saveEntry);
   document.getElementById("modal-delete").addEventListener("click", deleteEntry);
+  document.getElementById("confirm-back").addEventListener("click", () => showLogState("input"));
+  document.getElementById("confirm-yes").addEventListener("click", handleConfirmYes);
+  document.getElementById("btn-new-entry").addEventListener("click", () => {
+    document.getElementById("wine-input").value = "";
+    showLogState("input");
+  });
+
+  document.getElementById("inv-back").addEventListener("click", () => showInvState("list"));
+  document.getElementById("inv-save").addEventListener("click", saveInventurCount);
+  document.getElementById("inv-search").addEventListener("input", renderInvList);
+  ["inv-boxes", "inv-loose", "inv-magnums"].forEach(id =>
+    document.getElementById(id).addEventListener("input", updateInvComputed)
+  );
 
   document.querySelectorAll(".tab").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -421,8 +576,15 @@ function bindEvents() {
       btn.classList.add("active");
       document.getElementById("panel-" + btn.dataset.tab).classList.add("active");
       if (btn.dataset.tab === "history") updateWeekLabel();
+      if (btn.dataset.tab === "inventur") renderInvList();
     });
   });
+}
+
+function showLogState(state) {
+  document.getElementById("state-input").style.display   = state === "input"   ? "" : "none";
+  document.getElementById("state-confirm").style.display = state === "confirm" ? "" : "none";
+  document.getElementById("state-success").style.display = state === "success" ? "" : "none";
 }
 
 function handleStart() {
@@ -458,6 +620,7 @@ async function fetchInventory() {
     if (data.ok) {
       inventory = data.inventory.map((e, i) => ({ ...e, _id: "id_" + i + "_" + Date.now() }));
       renderCellar();
+      renderInvList();
       updateCount();
       setSyncStatus("ok", "✓ Google Sheets");
       setTimeout(() => setSyncStatus("", ""), 3000);
@@ -470,7 +633,7 @@ async function pushChanges(changes) {
   try {
     const res = await fetch(SHEETS_URL, {
       method: "POST",
-      headers: { "Content-Type": "text/plain" }, // text/plain avoids CORS preflight with Apps Script
+      headers: { "Content-Type": "text/plain" },
       body: JSON.stringify({ changes }),
     });
     const data = await res.json();
@@ -478,19 +641,18 @@ async function pushChanges(changes) {
       setSyncStatus("ok", "✓ Gespeichert");
       await fetchInventory();
       setTimeout(() => setSyncStatus("", ""), 3000);
+      return true;
     } else {
       setSyncStatus("error", "⚠ " + (data.error || "Tabellenfehler"));
-      showError("Tabellenfehler: " + (data.error || "unbekannt"));
+      return false;
     }
   } catch(e) {
     setSyncStatus("error", "⚠ Sync fehlgeschlagen");
-    showError("Sync fehlgeschlagen: " + e.message);
+    return false;
   }
 }
 
-// ── AI ────────────────────────────────────────────────────────────────────────
-const PROXY_URL = "https://kellerbuch-proxy.karljasperschmidt.workers.dev";
-
+// ── AI PARSING ────────────────────────────────────────────────────────────────
 function setSubmitState(state) {
   const btn = document.getElementById("submit-btn");
   if (state === "processing") {
@@ -500,7 +662,7 @@ function setSubmitState(state) {
   } else {
     btn.disabled = false;
     btn.classList.remove("processing");
-    btn.textContent = "Bestand aktualisieren";
+    btn.textContent = "Weiter →";
   }
 }
 
@@ -509,84 +671,194 @@ async function submitWineText() {
   const text = input.value.trim();
   document.getElementById("error-box").style.display = "none";
 
-  if (!text || text.length < 3) { showError("Bitte etwas eingeben."); return; }
+  if (!text || text.length < 3) { showError("Bitte etwas eingeben.", "error-box"); return; }
 
   setSubmitState("processing");
   try {
     const res = await fetch(PROXY_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-      },
+      headers: { "Content-Type": "application/json", "x-api-key": apiKey },
       body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 1000, system: SYSTEM_PROMPT, messages: [{ role: "user", content: text }] }),
     });
     if (!res.ok) {
       const errText = await res.text();
-      showError("HTTP " + res.status + ": " + errText.slice(0, 200));
+      showError("HTTP " + res.status + ": " + errText.slice(0, 200), "error-box");
       setSubmitState("idle");
       return;
     }
     const data = await res.json();
-    if (data.error) { showError("API-Fehler: " + data.error.message); setSubmitState("idle"); return; }
+    if (data.error) { showError("API-Fehler: " + data.error.message, "error-box"); setSubmitState("idle"); return; }
     let raw = data.content.map(b => b.text || "").join("").trim();
     raw = raw.replace(/^```json\s*/i, "").replace(/^```\s*/, "").replace(/```\s*$/, "").trim();
     let parsed;
-    try {
-      parsed = JSON.parse(raw);
-    } catch(parseErr) {
-      showError("Antwort konnte nicht verarbeitet werden: " + parseErr.message + " — Rohdaten: " + raw.slice(0, 150));
+    try { parsed = JSON.parse(raw); } catch(parseErr) {
+      showError("Antwort konnte nicht verarbeitet werden: " + parseErr.message, "error-box");
       setSubmitState("idle");
       return;
     }
-    const entry = { id: Date.now(), timestamp: new Date().toISOString(), transcript: text, parsed };
-    history.unshift(entry);
-    localStorage.setItem("kb-history", JSON.stringify(history.slice(0, 50)));
-    renderResult(parsed);
-    renderHistory();
-    await pushChanges(parsed.changes);
-    input.value = "";
+    pendingParsed = { parsed, transcript: text };
+    renderConfirmation(parsed);
+    showLogState("confirm");
   } catch(e) {
     if (e.message.toLowerCase().includes("load failed") || e.message.toLowerCase().includes("network")) {
-      showError("Netzwerkfehler beim Verbinden mit der API: " + e.message);
+      showError("Netzwerkfehler: " + e.message, "error-box");
     } else {
-      showError("Fehler: " + e.message);
+      showError("Fehler: " + e.message, "error-box");
     }
   }
   setSubmitState("idle");
 }
 
-// ── RENDER ────────────────────────────────────────────────────────────────────
-function renderResult(parsed) {
-  let html = '<div class="section-label">Erkannte Änderungen</div>';
-  parsed.changes.forEach(ch => {
-    const rem = ch.action === "remove";
-    html += `<div class="change-row">
-      <div class="change-top"><span class="badge ${ch.action}">${rem ? "− Entnahme" : "+ Lieferung"}</span><span class="change-qty ${ch.action}">${rem ? "−" : "+"}${ch.quantity}</span></div>
-      <div class="change-producer">${esc(ch.producer)}</div>
-      <div class="change-wine">${esc(ch.wine)}${ch.vintage ? " · " + ch.vintage : ""}</div>
-      ${ch.note ? '<div class="change-wine" style="font-style:italic">' + esc(ch.note) + "</div>" : ""}
-    </div>`;
-  });
-  html += `<div class="summary-line">${esc(parsed.summary)}</div>`;
-  document.getElementById("log-right").innerHTML = html;
+// Distinct vintages currently in stock for a producer+wine, each with its
+// own live quantity — used to auto-fill (1 match) or prompt (2+ matches)
+// on removal, since vintage is now part of the matching key.
+function getVintageOptions(producer, wine) {
+  const p = String(producer || "").toLowerCase(), w = String(wine || "").toLowerCase();
+  const seen = new Map();
+  inventory
+    .filter(e => e.producer.toLowerCase() === p && e.wine.toLowerCase() === w)
+    .forEach(e => {
+      const key = e.vintage || "";
+      if (!seen.has(key)) seen.set(key, { vintage: key, label: (key || "o.J.") + " · " + e.quantity + " Fl." });
+    });
+  return Array.from(seen.values());
 }
+
+function renderConfirmation(parsed) {
+  const list = document.getElementById("confirm-changes-list");
+  list.innerHTML = parsed.changes.map((ch, i) => {
+    const rem = ch.action === "remove";
+    let vintageBlock = "";
+    if (rem && !ch.vintage) {
+      const options = getVintageOptions(ch.producer, ch.wine);
+      if (options.length === 1) {
+        ch.vintage = options[0].vintage || null;
+      } else if (options.length > 1) {
+        vintageBlock = `<div class="confirm-vintage-picker">
+          <label>Welcher Jahrgang?</label>
+          <select class="vintage-select unresolved" data-change-idx="${i}">
+            <option value="">— auswählen —</option>
+            ${options.map(o => `<option value="${esc(o.vintage)}">${esc(o.label)}</option>`).join("")}
+          </select>
+        </div>`;
+      }
+    }
+    return `<div class="confirm-change-card">
+      <div class="confirm-change-header">
+        <span class="badge ${ch.action}">${rem ? "− Entnahme" : "+ Lieferung"}</span>
+        <span class="change-qty ${ch.action}" style="font-size:26px">${rem ? "−" : "+"}${ch.quantity}</span>
+      </div>
+      <div style="font-weight:600;font-size:18px">${esc(ch.producer)}</div>
+      <div style="color:var(--muted-light);font-size:15px;margin-top:4px">${esc(ch.wine)}${ch.vintage ? " · " + ch.vintage : ""}</div>
+      ${vintageBlock}
+    </div>`;
+  }).join("");
+  document.getElementById("confirm-summary-text").textContent = parsed.summary || "";
+
+  list.querySelectorAll(".vintage-select").forEach(sel => {
+    sel.addEventListener("change", () => {
+      const idx = Number(sel.dataset.changeIdx);
+      pendingParsed.parsed.changes[idx].vintage = sel.value || null;
+      sel.classList.toggle("unresolved", !sel.value);
+      updateConfirmButtonState();
+    });
+  });
+  updateConfirmButtonState();
+}
+
+function updateConfirmButtonState() {
+  const btn = document.getElementById("confirm-yes");
+  const unresolved = !!document.querySelector(".vintage-select.unresolved");
+  btn.disabled = unresolved;
+}
+
+async function handleConfirmYes() {
+  if (!pendingParsed) return;
+  const btn = document.getElementById("confirm-yes");
+  btn.disabled = true;
+  btn.classList.add("saving");
+  btn.textContent = "Speichert…";
+  document.getElementById("confirm-error-box").style.display = "none";
+
+  const { parsed, transcript } = pendingParsed;
+  const entry = { id: Date.now(), timestamp: new Date().toISOString(), transcript, parsed };
+  history.unshift(entry);
+  localStorage.setItem("kb-history", JSON.stringify(history.slice(0, 50)));
+  renderHistory();
+
+  const ok = await pushChanges(parsed.changes);
+
+  btn.disabled = false;
+  btn.classList.remove("saving");
+  btn.textContent = "✓ Ja, speichern";
+
+  if (ok) {
+    document.getElementById("success-summary").textContent = parsed.summary || "";
+    showLogState("success");
+    pendingParsed = null;
+  } else {
+    showError("Speichern fehlgeschlagen — bitte nochmal versuchen.", "confirm-error-box");
+  }
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+// Groups inventory rows by producer+wine — the restaurant-facing view
+// aggregates across vintages (colleagues serving a table just need the
+// total), while each vintage row stays individually editable underneath.
+function groupByWine(entries) {
+  const map = new Map();
+  entries.forEach(e => {
+    const key = e.producer.toLowerCase() + "||" + e.wine.toLowerCase();
+    if (!map.has(key)) map.set(key, { producer: e.producer, wine: e.wine, total: 0, variants: [] });
+    const g = map.get(key);
+    g.total += Number(e.quantity) || 0;
+    g.variants.push(e);
+  });
+  return Array.from(map.values()).sort((a, b) => a.producer.localeCompare(b.producer));
+}
+
+let cellarGroups = [];
 
 function renderCellar() {
   const q = (document.getElementById("search-input").value || "").toLowerCase();
-  const filtered = inventory.filter(e => !q || e.producer.toLowerCase().includes(q) || e.wine.toLowerCase().includes(q) || String(e.vintage).includes(q))
-    .sort((a, b) => a.producer.localeCompare(b.producer));
+  const filtered = inventory
+    .filter(e => !q || e.producer.toLowerCase().includes(q) || e.wine.toLowerCase().includes(q) || String(e.vintage).includes(q));
+  cellarGroups = groupByWine(filtered);
   const list = document.getElementById("cellar-list");
-  if (!filtered.length) { list.innerHTML = '<div class="loading">' + (q ? "Keine Ergebnisse." : "Noch keine Einträge.") + "</div>"; return; }
-  list.innerHTML = filtered.map(e => `<div class="cellar-row" data-id="${e._id}">
-    <span class="c-producer">${esc(e.producer)}</span>
-    <span class="c-wine">${esc(e.wine)}</span>
-    <span class="c-vintage">${e.vintage || "o.J."}</span>
-    <span class="c-qty ${Number(e.quantity) === 0 ? "zero" : ""}">${e.quantity}</span>
-  </div>`).join("");
-  list.querySelectorAll(".cellar-row").forEach(row => {
+  if (!cellarGroups.length) { list.innerHTML = '<div class="loading">' + (q ? "Keine Ergebnisse." : "Noch keine Einträge.") + "</div>"; return; }
+  list.innerHTML = cellarGroups.map((g, gi) => {
+    const multi = g.variants.length > 1;
+    const groupRow = `<div class="cellar-row cellar-group-row" data-gi="${gi}">
+      <span class="c-producer">${esc(g.producer)}</span>
+      <span class="c-wine">${esc(g.wine)}</span>
+      <span class="c-vintage">${multi ? g.variants.length + " Jahrgänge ▾" : (g.variants[0].vintage || "o.J.")}</span>
+      <span class="c-qty ${g.total === 0 ? "zero" : ""}">${g.total}</span>
+    </div>`;
+    const variantRows = multi
+      ? `<div class="cellar-variants" data-gi-variants="${gi}" style="display:none">` +
+        g.variants.slice().sort((a, b) => String(b.vintage || "").localeCompare(String(a.vintage || "")))
+          .map(v => `<div class="cellar-row cellar-variant-row" data-id="${v._id}">
+            <span class="c-producer"></span>
+            <span class="c-wine">↳ ${v.vintage || "o.J."}</span>
+            <span class="c-vintage"></span>
+            <span class="c-qty ${Number(v.quantity) === 0 ? "zero" : ""}">${v.quantity}</span>
+          </div>`).join("") +
+        `</div>`
+      : "";
+    return groupRow + variantRows;
+  }).join("");
+  list.querySelectorAll(".cellar-group-row").forEach(row => {
     row.addEventListener("click", () => {
-      const entry = inventory.find(e => e._id === row.dataset.id);
+      const g = cellarGroups[Number(row.dataset.gi)];
+      if (g.variants.length === 1) { openModal(g.variants[0]); return; }
+      const variantsEl = list.querySelector(`[data-gi-variants="${row.dataset.gi}"]`);
+      if (variantsEl) variantsEl.style.display = variantsEl.style.display === "none" ? "" : "none";
+    });
+  });
+  list.querySelectorAll(".cellar-variant-row").forEach(row => {
+    row.addEventListener("click", e => {
+      e.stopPropagation();
+      const entry = inventory.find(en => en._id === row.dataset.id);
       if (entry) openModal(entry);
     });
   });
@@ -597,11 +869,11 @@ function renderHistory() {
   if (!history.length) { list.innerHTML = '<div class="loading">Noch kein Verlauf.</div>'; return; }
   list.innerHTML = history.map(entry => {
     const d = new Date(entry.timestamp).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
-    const changes = entry.parsed.changes.map((ch, i) => `<div class="h-change">
+    const changes = entry.parsed.changes.map(ch => `<div class="h-change">
       <span class="badge ${ch.action}">${ch.action === "remove" ? "− Entnahme" : "+ Lieferung"}</span>
       <span class="change-qty ${ch.action}" style="font-size:16px">${ch.action === "remove" ? "−" : "+"}${ch.quantity}</span>
-      <span style="font-size:14px">${esc(ch.producer)} — ${esc(ch.wine)}</span>
-      ${ch.vintage ? '<span style="font-size:12px;color:var(--muted)">' + ch.vintage + "</span>" : ""}
+      <span style="font-size:15px">${esc(ch.producer)} — ${esc(ch.wine)}</span>
+      ${ch.vintage ? '<span style="font-size:13px;color:var(--muted)">' + ch.vintage + "</span>" : ""}
     </div>`).join("");
     return `<div class="h-entry">
       <div class="h-meta"><span>${d}</span><span>${entry.parsed.changes.length} Änderung${entry.parsed.changes.length !== 1 ? "en" : ""}</span></div>
@@ -653,16 +925,132 @@ async function deleteEntry() {
   } else await fetchInventory();
 }
 
-function showError(msg) { const el = document.getElementById("error-box"); el.textContent = msg; el.style.display = "block"; }
+function showError(msg, boxId) {
+  const el = document.getElementById(boxId || "error-box");
+  el.textContent = msg;
+  el.style.display = "block";
+}
+
 function esc(s) { return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
+// ── INVENTUR ──────────────────────────────────────────────────────────────────
+function showInvState(state) {
+  document.getElementById("inv-state-list").style.display  = state === "list"  ? "" : "none";
+  document.getElementById("inv-state-count").style.display = state === "count" ? "" : "none";
+}
+
+function renderInvList() {
+  const q = (document.getElementById("inv-search").value || "").toLowerCase();
+  const filtered = inventory
+    .filter(e => !q || e.producer.toLowerCase().includes(q) || e.wine.toLowerCase().includes(q))
+    .sort((a, b) => a.producer.localeCompare(b.producer));
+  const list = document.getElementById("inv-list");
+  if (!filtered.length) {
+    list.innerHTML = '<div class="loading">' + (q ? "Keine Ergebnisse." : "Noch keine Einträge.") + "</div>";
+    return;
+  }
+  list.innerHTML = filtered.map(e => `<div class="cellar-row" data-id="${e._id}">
+    <span class="c-producer">${esc(e.producer)}</span>
+    <span class="c-wine">${esc(e.wine)}</span>
+    <span class="c-vintage">${e.vintage || "o.J."}</span>
+    <span class="c-qty ${Number(e.quantity) === 0 ? "zero" : ""}">${e.quantity}</span>
+  </div>`).join("");
+  list.querySelectorAll(".cellar-row").forEach(row => {
+    row.addEventListener("click", () => {
+      const entry = inventory.find(e => e._id === row.dataset.id);
+      if (entry) openInventurCount(entry);
+    });
+  });
+}
+
+function openInventurCount(entry) {
+  inventurEntry = entry;
+  document.getElementById("inv-title").textContent    = entry.producer;
+  document.getElementById("inv-subtitle").textContent = entry.wine + (entry.vintage ? " · " + entry.vintage : " · o.J.");
+  document.getElementById("inv-expected-val").textContent = entry.quantity;
+  document.getElementById("inv-boxes").value   = "0";
+  document.getElementById("inv-loose").value   = "0";
+  document.getElementById("inv-magnums").value = "0";
+  updateInvComputed();
+  showInvState("count");
+}
+
+function updateInvComputed() {
+  const boxes   = Number(document.getElementById("inv-boxes").value)   || 0;
+  const loose   = Number(document.getElementById("inv-loose").value)   || 0;
+  const counted = (boxes * 6) + loose;
+  const expected = inventurEntry ? Number(inventurEntry.quantity) : 0;
+  const delta    = counted - expected;
+
+  document.getElementById("inv-counted-val").textContent = counted;
+
+  const el = document.getElementById("inv-delta");
+  el.className = "inv-delta";
+  if (delta === 0) {
+    el.classList.add("match");
+    el.textContent = "✓ Stimmt";
+  } else if (delta < 0) {
+    el.classList.add("missing");
+    el.textContent = delta + " Flaschen fehlen";
+  } else {
+    el.classList.add("surplus");
+    el.textContent = "+" + delta + " Flaschen mehr";
+  }
+}
+
+async function saveInventurCount() {
+  if (!inventurEntry) return;
+  const boxes   = Number(document.getElementById("inv-boxes").value)   || 0;
+  const loose   = Number(document.getElementById("inv-loose").value)   || 0;
+  const magnums = Number(document.getElementById("inv-magnums").value) || 0;
+  const counted = (boxes * 6) + loose;
+
+  const btn = document.getElementById("inv-save");
+  btn.disabled = true;
+  btn.classList.add("saving");
+  btn.textContent = "Speichert…";
+
+  try {
+    const res = await fetch(SHEETS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({
+        action: "stocktake",
+        producer: inventurEntry.producer,
+        wine:     inventurEntry.wine,
+        vintage:  inventurEntry.vintage,
+        counted,
+        magnums,
+      }),
+    });
+    const data = await res.json();
+    if (data.ok) {
+      // Update local inventory so the list reflects the new count immediately
+      const entry = inventory.find(e => e._id === inventurEntry._id);
+      if (entry) entry.quantity = counted;
+      updateCount();
+      renderCellar();
+      renderInvList();
+      inventurEntry = null;
+      showInvState("list");
+    } else {
+      alert("Fehler beim Speichern: " + (data.error || "unbekannt"));
+    }
+  } catch(err) {
+    alert("Netzwerkfehler: " + err.message);
+  }
+
+  btn.disabled = false;
+  btn.classList.remove("saving");
+  btn.textContent = "✓ Speichern";
+}
+
 // ── SERVICE WEEK ──────────────────────────────────────────────────────────────
-// Service week: Thu–Mon. Tue & Wed are closed.
 function getServiceWeekStart(date) {
   const d = new Date(date);
   d.setHours(0, 0, 0, 0);
   const dayOfWeek = d.getDay();
-  const daysSinceThu = (dayOfWeek + 3) % 7; // Thu→0, Fri→1, Sat→2, Sun→3, Mon→4, Tue→5, Wed→6
+  const daysSinceThu = (dayOfWeek + 3) % 7; // Thu→0, Fri→1, Sat→2, Sun→3, Mon→4
   d.setDate(d.getDate() - daysSinceThu);
   return d;
 }
@@ -684,35 +1072,20 @@ function updateWeekLabel() {
 function exportServiceWeekCSV() {
   const start = getServiceWeekStart(new Date());
   const end = getServiceWeekEnd(start);
-
-  const weekEntries = history.filter(e => {
-    const t = new Date(e.timestamp);
-    return t >= start && t <= end;
-  });
-
-  if (!weekEntries.length) {
-    alert("Keine Einträge in dieser Servicewoche.");
-    return;
-  }
-
+  const weekEntries = history.filter(e => { const t = new Date(e.timestamp); return t >= start && t <= end; });
+  if (!weekEntries.length) { alert("Keine Einträge in dieser Servicewoche."); return; }
   const rows = [["Zeitpunkt", "Aktion", "Produzent", "Wein", "Jahrgang", "Menge", "Notiz", "Eingabe"]];
   weekEntries.forEach(entry => {
     entry.parsed.changes.forEach(ch => {
       rows.push([
         new Date(entry.timestamp).toLocaleString("de-DE"),
         ch.action === "remove" ? "Entnahme" : "Lieferung",
-        ch.producer,
-        ch.wine,
-        ch.vintage || "",
-        ch.quantity,
-        ch.note || "",
-        entry.transcript,
+        ch.producer, ch.wine, ch.vintage || "", ch.quantity, ch.note || "", entry.transcript,
       ]);
     });
   });
-
   const csv = rows.map(r => r.map(cell => '"' + String(cell).replace(/"/g, '""') + '"').join(",")).join("\n");
-  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" }); // BOM for Excel
+  const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   const weekStr = start.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }).replace(".", "-").replace(".", "");
